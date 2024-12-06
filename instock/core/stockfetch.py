@@ -18,7 +18,7 @@ import instock.core.crawling.stock_dzjy_em as sde
 import instock.core.crawling.stock_hist_em as she
 import instock.core.crawling.stock_fund_em as sff
 import instock.core.crawling.stock_fhps_em as sfe
-
+import traceback
 __author__ = 'myh '
 __date__ = '2023/3/10 '
 
@@ -84,6 +84,8 @@ def fetch_etfs(date):
         data = data.loc[data['new_price'].apply(is_open)]
         return data
     except Exception as e:
+        print(e)
+        traceback.print_exc()
         logging.error(f"stockfetch.fetch_etfs处理异常：{e}")
     return None
 

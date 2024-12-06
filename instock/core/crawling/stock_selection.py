@@ -25,11 +25,13 @@ def stock_selection() -> pd.DataFrame:
         "sty": sty[1:],
         "filter": "(MARKET+in+(\"上交所主板\",\"深交所主板\",\"深交所创业板\"))(NEW_PRICE>0)",
         "p": 1,
-        "ps": 10000,
+        "ps": 2000,
         "source": "SELECT_SECURITIES",
         "client": "WEB"
     }
     r = requests.get(url, params=params)
+
+     
     data_json = r.json()
     data = data_json["result"]["data"]
     if not data:

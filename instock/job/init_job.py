@@ -40,6 +40,7 @@ def create_new_base_table():
                                   PRIMARY KEY (`code`) USING BTREE,
                                   INDEX `INIX_DATETIME`(`datetime`) USING BTREE
                                   ) CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;"""
+            print(create_table_sql)
             db.execute(create_table_sql)
 
 

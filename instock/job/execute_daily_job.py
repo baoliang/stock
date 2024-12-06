@@ -29,7 +29,7 @@ import klinepattern_data_daily_job as kdj
 import selection_data_daily_job as sddj
 
 __author__ = 'myh '
-__date__ = '2023/3/10 '
+__date__ = '2024/11/5 '
 
 
 def main():
