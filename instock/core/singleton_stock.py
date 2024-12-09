@@ -33,6 +33,9 @@ class stock_hist_data(metaclass=singleton_type):
         if stocks is None:
             self.data = None
             return
+        if len(stocks) == 0:
+            self.data = None 
+            return 
         date_start, is_cache = trd.get_trade_hist_interval(stocks[0][0])  # 提高运行效率，只运行一次
         _data = {}
         try:

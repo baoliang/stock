@@ -14,7 +14,7 @@ from instock.core.strategy import parking_apron
 from instock.core.strategy import low_backtrace_increase
 from instock.core.strategy import keep_increasing
 from instock.core.strategy import high_tight_flag
-
+from instock.core.strategy import beyond_middle_boll
 __author__ = 'myh '
 __date__ = '2023/3/10 '
 
@@ -387,7 +387,9 @@ TABLE_CN_STOCK_STRATEGIES = [
     {'name': 'cn_stock_strategy_climax_limitdown', 'cn': '放量跌停', 'size': 70, 'func': climax_limitdown.check,
      'columns': _tmp_columns},
     {'name': 'cn_stock_strategy_low_atr', 'cn': '低ATR成长', 'size': 70, 'func': low_atr.check_low_increase,
-     'columns': _tmp_columns}
+     'columns': _tmp_columns},
+    #  {'name': 'cn_beyond_middle', 'cn': '超过中轨', 'size': 70, 'func': beyond_middle_boll.check,
+    #  'columns': _tmp_columns}
 ]
 
 STOCK_KLINE_PATTERN_DATA = {'name': 'cn_stock_pattern_recognitions', 'cn': 'K线形态',

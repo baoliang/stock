@@ -33,6 +33,7 @@ def stock_zh_a_spot_em() -> pd.DataFrame:
     }
     r = requests.get(url, params=params)
     data_json = r.json()
+   
     if not data_json["data"]["diff"]:
         return pd.DataFrame()
     temp_df = pd.DataFrame(data_json["data"]["diff"])

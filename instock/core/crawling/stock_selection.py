@@ -21,22 +21,26 @@ def stock_selection() -> pd.DataFrame:
     for k in cols:
         sty = f"{sty},{cols[k]['map']}"
     url = "https://data.eastmoney.com/dataapi/xuangu/list"
-    params = {
-        "sty": sty[1:],
-        "filter": "(MARKET+in+(\"上交所主板\",\"深交所主板\",\"深交所创业板\"))(NEW_PRICE>0)",
-        "p": 1,
-        "ps": 2000,
-        "source": "SELECT_SECURITIES",
-        "client": "WEB"
-    }
-    r = requests.get(url, params=params)
+    all_data=[]
+    for page in list(range(1, 6)):
+        params = {
+            "sty": sty[1:],
+            "filter": "(MARKET+in+(\"上交所主板\",\"深交所主板\",\"深交所创业板\"))(NEW_PRICE>0)",
+            "p": page,
+            "ps": 2000,
+            "source": "SELECT_SECURITIES",
+            "client": "WEB"
+        }
+        r = requests.get(url, params=params)
 
+        
+        data_json = r.json()
+        data = data_json["result"]["data"]
      
-    data_json = r.json()
-    data = data_json["result"]["data"]
-    if not data:
+        all_data = all_data + data
+    if not all_data:
         return pd.DataFrame()
-    temp_df = pd.DataFrame(data)
+    temp_df = pd.DataFrame(all_data)
 
     mask = ~temp_df['CONCEPT'].isna()
     temp_df.loc[mask, 'CONCEPT'] = temp_df.loc[mask, 'CONCEPT'].apply(lambda x: ', '.join(x))
