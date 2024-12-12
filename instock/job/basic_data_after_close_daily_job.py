@@ -33,7 +33,7 @@ def save_after_close_stock_blocktrade_data(date):
         else:
             cols_type = tbs.get_field_types(tbs.TABLE_CN_STOCK_BLOCKTRADE['columns'])
 
-        mdb.insert_db_from_df(data, table_name, cols_type, False, "`date`,`code`")
+        mdb.insert_db_from_df(data, table_name, cols_type, False, "`date`,`code`(6)")
     except Exception as e:
         logging.error(f"basic_data_other_daily_job.save_stock_blocktrade_data处理异常：{e}")
 

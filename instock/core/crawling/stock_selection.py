@@ -22,10 +22,10 @@ def stock_selection() -> pd.DataFrame:
         sty = f"{sty},{cols[k]['map']}"
     url = "https://data.eastmoney.com/dataapi/xuangu/list"
     all_data=[]
-    for page in list(range(1, 6)):
+    for page in list(range(1, 5)):
         params = {
             "sty": sty[1:],
-            "filter": "(MARKET+in+(\"上交所主板\",\"深交所主板\",\"深交所创业板\"))(NEW_PRICE>0)",
+            "filter": "(MARKET+in+(\"上交所主板\",\"深交所主板\",\"深交所创业板\",\"上交所科创板\",\"北京证券交易所\"))(NEW_PRICE>0)",
             "p": page,
             "ps": 2000,
             "source": "SELECT_SECURITIES",

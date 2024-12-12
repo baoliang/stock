@@ -17,7 +17,7 @@ __author__ = 'myh '
 __date__ = '2023/5/5 '
 
 
-def save_nph_stock_selection_data(date, before=True):
+def save_nph_stock_selection_data(date, before=False):
     if before:
         return
 
@@ -36,7 +36,7 @@ def save_nph_stock_selection_data(date, before=True):
         else:
             cols_type = tbs.get_field_types(tbs.TABLE_CN_STOCK_SELECTION['columns'])
 
-        mdb.insert_db_from_df(data, table_name, cols_type, False, "`date`,`code`")
+        mdb.insert_db_from_df(data, table_name, cols_type, False, "`date`,`code`(6)")
     except Exception as e:
         logging.error(f"selection_data_daily_job.save_nph_stock_selection_data处理异常：{e}")
        

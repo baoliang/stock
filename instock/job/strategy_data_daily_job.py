@@ -48,7 +48,7 @@ def prepare(date, strategy):
         date_str = date.strftime("%Y-%m-%d")
         if date.strftime("%Y-%m-%d") != data.iloc[0]['date']:
             data['date'] = date_str
-        mdb.insert_db_from_df(data, table_name, cols_type, False, "`date`,`code`")
+        mdb.insert_db_from_df(data, table_name, cols_type, False, "`date`,`code`(6)")
 
     except Exception as e:
         logging.error(f"strategy_data_daily_job.prepare处理异常：{strategy}策略{e}")

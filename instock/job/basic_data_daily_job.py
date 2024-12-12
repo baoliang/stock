@@ -19,7 +19,7 @@ __date__ = '2023/3/10 '
 
 
 # 股票实时行情数据。
-def save_nph_stock_spot_data(date, before=True):
+def save_nph_stock_spot_data(date, before=False):
     if before:
         return
     # 股票列表
@@ -37,14 +37,14 @@ def save_nph_stock_spot_data(date, before=True):
         else:
             cols_type = tbs.get_field_types(tbs.TABLE_CN_STOCK_SPOT['columns'])
 
-        mdb.insert_db_from_df(data, table_name, cols_type, False, "`date`,`code`")
+        mdb.insert_db_from_df(data, table_name, cols_type, False, "`date`,`code`(6)")
 
     except Exception as e:
         logging.error(f"basic_data_daily_job.save_stock_spot_data处理异常：{e}")
 
 
 # 基金实时行情数据。
-def save_nph_etf_spot_data(date, before=True):
+def save_nph_etf_spot_data(date, before=False):
     if before:
         return
     # 股票列表
@@ -62,7 +62,7 @@ def save_nph_etf_spot_data(date, before=True):
         else:
             cols_type = tbs.get_field_types(tbs.TABLE_CN_ETF_SPOT['columns'])
 
-        mdb.insert_db_from_df(data, table_name, cols_type, False, "`date`,`code`")
+        mdb.insert_db_from_df(data, table_name, cols_type, False, "`date`,`code`(6)")
     except Exception as e:
         logging.error(f"basic_data_daily_job.save_nph_etf_spot_data处理异常：{e}")
 

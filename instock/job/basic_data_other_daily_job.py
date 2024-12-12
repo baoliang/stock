@@ -20,13 +20,16 @@ __date__ = '2023/3/10 '
 
 
 # 每日股票龙虎榜
-def save_nph_stock_top_data(date, before=True):
+def save_nph_stock_top_data(date, before=False):
+
     if before:
         return
 
     try:
         data = stf.fetch_stock_top_data(date)
+        
         if data is None or len(data.index) == 0:
+           
             return
 
         table_name = tbs.TABLE_CN_STOCK_TOP['name']
@@ -37,14 +40,15 @@ def save_nph_stock_top_data(date, before=True):
             cols_type = None
         else:
             cols_type = tbs.get_field_types(tbs.TABLE_CN_STOCK_TOP['columns'])
-        mdb.insert_db_from_df(data, table_name, cols_type, False, "`date`,`code`")
+        
+        mdb.insert_db_from_df(data, table_name, cols_type, False, "`date`,`code`(6)")
     except Exception as e:
         logging.error(f"basic_data_other_daily_job.save_stock_top_data处理异常：{e}")
     stock_spot_buy(date)
 
 
 # 每日股票资金流向
-def save_nph_stock_fund_flow_data(date, before=True):
+def save_nph_stock_fund_flow_data(date, before=False):
     if before:
         return
 
@@ -77,7 +81,7 @@ def save_nph_stock_fund_flow_data(date, before=True):
         else:
             cols_type = tbs.get_field_types(tbs.TABLE_CN_STOCK_FUND_FLOW['columns'])
 
-        mdb.insert_db_from_df(data, table_name, cols_type, False, "`date`,`code`")
+        mdb.insert_db_from_df(data, table_name, cols_type, False, "`date`,`code`(6)")
     except Exception as e:
         logging.error(f"basic_data_other_daily_job.save_nph_stock_fund_flow_data处理异常：{e}")
 
@@ -104,7 +108,7 @@ def run_check_stock_fund_flow(times):
 
 
 # 每日行业资金流向
-def save_nph_stock_sector_fund_flow_data(date, before=True):
+def save_nph_stock_sector_fund_flow_data(date, before=False):
     if before:
         return
 
@@ -174,7 +178,7 @@ def run_check_stock_sector_fund_flow(index_sector, times):
 
 
 # 每日股票分红配送
-def save_nph_stock_bonus(date, before=True):
+def save_nph_stock_bonus(date, before=False):
     if before:
         return
 
@@ -191,7 +195,7 @@ def save_nph_stock_bonus(date, before=True):
             cols_type = None
         else:
             cols_type = tbs.get_field_types(tbs.TABLE_CN_STOCK_BONUS['columns'])
-        mdb.insert_db_from_df(data, table_name, cols_type, False, "`date`,`code`")
+        mdb.insert_db_from_df(data, table_name, cols_type, False, "`date`,`code`(6)")
     except Exception as e:
         logging.error(f"basic_data_other_daily_job.save_nph_stock_bonus处理异常：{e}")
 
@@ -200,6 +204,8 @@ def save_nph_stock_bonus(date, before=True):
 def stock_spot_buy(date):
     try:
         _table_name = tbs.TABLE_CN_STOCK_SPOT['name']
+       
+        
         if not mdb.checkTableIsExist(_table_name):
             return
 
@@ -207,6 +213,7 @@ def stock_spot_buy(date):
                 `pe9` > 0 and `pe9` <= 20 and `pbnewmrq` <= 10 and `roe_weight` >= 15'''
         data = pd.read_sql(sql=sql, con=mdb.engine())
         data = data.drop_duplicates(subset="code", keep="last")
+        
         if len(data.index) == 0:
             return
 
@@ -219,7 +226,7 @@ def stock_spot_buy(date):
         else:
             cols_type = tbs.get_field_types(tbs.TABLE_CN_STOCK_SPOT_BUY['columns'])
 
-        mdb.insert_db_from_df(data, table_name, cols_type, False, "`date`,`code`")
+        mdb.insert_db_from_df(data, table_name, cols_type, False, "`date`,`code`(6)")
     except Exception as e:
         logging.error(f"basic_data_other_daily_job.stock_spot_buy处理异常：{e}")
 
