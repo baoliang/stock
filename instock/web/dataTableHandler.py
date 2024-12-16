@@ -63,7 +63,7 @@ class GetStockDataHandler(webBase.BaseHandler, ABC):
         if web_module_data.order_columns is not None:
             order_columns = f",{web_module_data.order_columns}"
 
-        sql = f" SELECT *{order_columns} FROM `{web_module_data.table_name}`{where}  {order_by} limit 5000"
+        sql = f" SELECT *{order_columns} FROM `{web_module_data.table_name}`{where}  {order_by} limit 50000"
 
         data = self.db.query(sql)
         self.write(json.dumps(data, cls=MyEncoder))
